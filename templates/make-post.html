@@ -34,7 +34,6 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        {{ cr_form.csrf_token }}
         {{ render_form(cr_form) }}
         {{ ckeditor.load() }}
         {{ ckeditor.config(name='body') }}

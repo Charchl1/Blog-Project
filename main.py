@@ -18,9 +18,6 @@ app = Flask(__name__)
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
 
-csrf = CSRFProtect(app)
-csrf.init_app(app)
-app.config['WTF_CSRF_SECRET_KEY'] = SECRET_KEY
 
 Bootstrap5(app)
 ckeditor = CKEditor(app)
