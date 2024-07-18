@@ -36,6 +36,7 @@
             {% endif %}
       {% endwith %}
       <div class="col-lg-8 col-md-10 mx-auto">
+        {{ reg_form.csrf_token }}
         {{ render_form(reg_form) }}
       </div>
     </div>

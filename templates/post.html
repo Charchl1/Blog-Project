@@ -47,6 +47,7 @@
         {% endwith %}
 
          <!-- Comment Form -->
+          {{ comment_form.csrf_token }}
           {{ render_form(comment_form) }}
           {{ ckeditor.load() }}
           {{ ckeditor.config(name='comment_field') }}
