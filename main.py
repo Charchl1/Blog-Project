@@ -1,20 +1,27 @@
 import os
 from functools import wraps
+from flask_wtf.csrf import CSRFProtect
 from flask import Flask, render_template, redirect, url_for, request, flash, abort
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from sqlalchemy import Integer, String, Text, ForeignKey
 from datetime import date
-from flask_ckeditor import CKEditor, CKEditorField
-from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
+from flask_ckeditor import CKEditor
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_gravatar import Gravatar
 
+from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get('FLASK_KEY')
+SECRET_KEY = os.urandom(32)
+app.config['SECRET_KEY'] = SECRET_KEY
+
+csrf = CSRFProtect(app)
+csrf.init_app(app)
+app.config['WTF_CSRF_SECRET_KEY'] = SECRET_KEY
+
 Bootstrap5(app)
 ckeditor = CKEditor(app)
 
