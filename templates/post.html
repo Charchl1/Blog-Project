@@ -1,0 +1,80 @@
+{% include "header.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('{{post.img_url}}')">
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="post-heading">
+          <h1>{{ post.title }}</h1>
+          <h2 class="subheading">{{ post.subtitle }}</h2>
+          <span class="meta"
+            >Posted by
+            <a href="#">{{ post.author.name }}</a>
+            on {{ post.date }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Post Content -->
+<article>
+  <div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        {{ post.body|safe }}
+        {% if current_user.id == 1 %}
+        <div class="d-flex justify-content-end mb-4">
+          <a
+            class="btn btn-primary float-right"
+            href="{{ url_for('edit_post', post_id=post.id) }}"
+            >Edit Post</a
+          >
+        </div>
+        {% endif %}
+        <hr>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <p>{{ message }}</p>
+            {% endfor %}
+            <a class="btn btn-primary btn-md" href="{{ url_for('login') }}">Login</a>
+            <hr>
+          {% endif %}
+        {% endwith %}
+
+         <!-- Comment Form -->
+          {{ render_form(comment_form) }}
+          {{ ckeditor.load() }}
+          {{ ckeditor.config(name='comment_field') }}
+        <!-- Comments -->
+        <br>
+        <div class="comment">
+          <ul class="commentList">
+            {% for i in comments %}
+            <li>
+              <header class="card-header border-0 bg-transparent d-flex align-items-center">
+                <div>
+                  <img src="{{ i.comment_author.email | gravatar }}" class="rounded-circle me-2"/><a class="fw-semibold text-decoration-none">{{ i.comment_author.name }}</a>
+                  <span class="ms-3 small text-muted">{{ comment_date }}</span>
+                </div>
+                <div class="dropdown ms-auto">
+                </div>
+              </header>
+              <div class="card-body py-2 px-3">
+                {{ i.text|safe }}
+              </div>
+            </li>
+              {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <br>
+  </div>
+</article>
+
+{% include "footer.html" %}
