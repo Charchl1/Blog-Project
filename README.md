@@ -1,7 +1,7 @@
 Hello there!
 
 I am learning programming with Python.
-Here is a simple website for my Portfolio on GitHub.
+Here is a simple Blog Website for my Portfolio on GitHub.
 
 With this project I have learnt:
 1. Creation of DataBase with SQLAlchemy (tables for Blog Posts, Comments snd Users, relationships One-To-Many within Users and Posts, Users and Comments, Posts and Comments);
